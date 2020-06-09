@@ -7,4 +7,4 @@ run:
   - docker build -t bhuwanbhasker/docker-react -f Dockerfile.dev . 
 
 script:
-  - docker run -e CI=true bhuwanbhasker/docker-react npm test
+  - docker run bhuwanbhasker/docker-react npm run test
