@@ -1,0 +1,25 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  docker-build:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -t bhuwanbhasker/docker-react -f Dockerfile.dev .
+      - run: docker run -e CI=true bhuwanbhasker/docker-react npm run test
+
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+workflows:
+    build-and-test:
+      jobs:
+        - docker-build
+        - build-and-test
